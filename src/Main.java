@@ -8,6 +8,6 @@ public class Main {
 
         StudentMarkTracker studentMarkTracker = new StudentMarkTracker();
 
-        studentMarkTracker.trackStudentMarks(matrix);
+        studentMarkTracker.printStudentResults(matrix);
     }
 }

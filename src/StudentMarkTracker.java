@@ -2,29 +2,34 @@ import java.util.Arrays;
 
 public class StudentMarkTracker {
 
-    public void trackStudentMarks(int [][] matrix){
-        Arrays.stream(matrix)
-                .map(this::calculateStudentAvgMark)
-                .flatMapToDouble(Arrays::stream)
-                .forEach(this::classifyAvgMarks);
-    }
+    private static final int MIN_MARK = 0;
+    private static final int MAX_MARK = 10;
+    private static final double EXCELLENT_SCORE = 8.0;
+    private static final double GOOD_SCORE = 6.0;
+    private static final double SATISFACTORY_SCORE = 4.0;
 
-    private double[] calculateStudentAvgMark(int[] matrix){
-        return Arrays.stream(matrix).average().stream().toArray();
-    }
-
-    private void classifyAvgMarks(double avgMark){
-        if (avgMark > 10 || avgMark < 0) {
-            System.out.printf("%s - Invalid mark\n", avgMark);
+    public void printStudentResults(int [][] matrix){
+        for (int i = 0; i < matrix.length; i++) {
+            System.out.printf("Student #%d average mark: ", i+1);
+            System.out.println(classifyAverageMark(calculateStudentAverageMark(matrix[i])));
         }
-        if (avgMark >= 8){
-            System.out.printf("%s - Did an excellent job!\n", avgMark);
-        } else if (avgMark < 8 && avgMark >= 6) {
-            System.out.printf("%s - Handled the work well!\n", avgMark);
-        } else if (avgMark < 6 && avgMark >= 4) {
-            System.out.printf("%s - Partially succeeded.\n", avgMark);
+    }
+
+    private double calculateStudentAverageMark(int[] studentMarks){
+        return Arrays.stream(studentMarks).average().orElse(0.0);
+    }
+
+    private String classifyAverageMark(double averageMark){
+        if (averageMark > MAX_MARK || averageMark < MIN_MARK) {
+            return String.format("%.2f - Invalid mark", averageMark);
+        } else if (averageMark >= EXCELLENT_SCORE) {
+            return String.format("%.2f - They did an excellent job!", averageMark);
+        } else if (averageMark >= GOOD_SCORE) {
+            return String.format("%.2f - They handled the work well!", averageMark);
+        } else if (averageMark >= SATISFACTORY_SCORE) {
+            return String.format("%.2f - They partially succeeded.", averageMark);
         } else {
-            System.out.printf("%s - Failed.\n", avgMark);
+            return String.format("%.2f - They failed.", averageMark);
         }
     }
 }
