@@ -1,13 +1,13 @@
 public class Main {
     public static void main(String[] args) {
-        int[][] matrix = {
+        int[][] studentMarks = {
                 {10, 9, 8},
                 {6, 5, 7},
-                {2, 3, 9}
+                {2, 3, 9},
+                {},
+                {15, -5, 10}
         };
 
-        StudentMarkTracker studentMarkTracker = new StudentMarkTracker();
-
-        studentMarkTracker.printStudentResults(matrix);
+        StudentMarkTracker.printStudentResults(studentMarks);
     }
 }
